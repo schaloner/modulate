@@ -1,0 +1,4 @@
+h1. Modulate
+
+Modulate allows you to include local modules in your Play! application based on the framework ID.  This capability was present in Play 1.x, but with
+the new dependency mechanism of Play 1.2 it was no longer possible.

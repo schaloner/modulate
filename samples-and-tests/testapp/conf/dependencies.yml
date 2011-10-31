@@ -1,0 +1,12 @@
+# Application dependencies
+
+require:
+    - play
+    - modulate -> modulate
+
+repositories:
+    - Modulate:
+        type:     local
+        artifact: "${application.path}/../../../modulate"
+        contains:
+            - modulate

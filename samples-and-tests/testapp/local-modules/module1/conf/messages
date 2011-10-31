@@ -1,0 +1,5 @@
+# Default module1 messages
+# You can specialize this file for each language.
+# For exemple, for french create a messages.fr file
+
+#module1.name=module1

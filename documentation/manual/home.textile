@@ -1,0 +1,90 @@
+h1. Modulate
+
+Modulate allows you to include local modules in your Play! application based on the framework ID.  This capability was present in Play 1.x, but with
+the new dependency mechanism of Play 1.2 it was no longer possible.
+
+h2. Usage
+
+Modulate requires two things:
+* The modulate module must be declared in your dependencies.yml file
+* A file called modulate.yml should be present in your conf directory
+
+h2. modulate.yml
+
+The modulate configuration file contains one section per framework ID.  For example,
+
+<pre>
+<code>
+production:
+  - local-modules/module1
+  - local-modules/module2
+  - local-modules/module3
+  - local-modules/module4
+development:
+  - local-modules/module2
+  - local-modules/module4
+whatever:
+  - local-modules/module3
+  - local-modules/module4
+test:
+  - local-modules/module1
+  - local-modules/module2
+  - local-modules/module4
+</code>
+</pre>
+
+The path to the module is rooted in the application directory - here, the local modules are in the local-modules directory of the play app.  If you want to use modules located outside of your application directory, use ./ notation to point to it.
+
+It's also possible you have framework IDs that don't require any optional modules - in these cases, just omit the framework ID from modulate.yml.
+
+For the above example, when running with the framework ID "whatever", module3 and module4 will be added to the application before it is ready for use.  You will see these modules are available in the usual place, with additional Modulate text to clearly indicate where the modules have come from.
+
+<pre>
+<code>
+play run --%whatever
+==
+~        _            _
+~  _ __ | | __ _ _  _| |
+~ | '_ \| |/ _' | || |_|
+~ |  __/|_|\____|\__ (_)
+~ |_|            |__/
+~
+==
+~ play! 1.2.3, http://www.playframework.org
+~ framework ID is whatever
+~
+~ Ctrl+C to stop
+~
+Listening for transport dt_socket at address: 8000
+10:19:08,156 INFO  ~ Starting /home/steve/objectify/open-source/modulate/samples-and-tests/testapp
+10:19:08,161 INFO  ~ Module modulate is available (/home/steve/objectify/open-source/modulate)
+10:19:08,746 INFO  ~ Starting Modulate...
+10:19:08,837 INFO  ~ Modulate: adding module3
+10:19:08,838 INFO  ~ Module module3 is available (/home/steve/objectify/open-source/modulate/samples-and-tests/testapp/local-modules/module3)
+10:19:08,838 INFO  ~ Modulate: adding module4
+10:19:08,838 INFO  ~ Module module4 is available (/home/steve/objectify/open-source/modulate/samples-and-tests/testapp/local-modules/module4)
+10:19:08,838 INFO  ~ ...Modulate finished
+10:19:08,838 WARN  ~ You're running Play! in DEV mode
+10:19:08,902 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
+</code>
+</pre>
+
+
+
+h2. When to use Modulate
+
+Modulate exists only to allow you to enable/disable optional modules.  For any module common to all frameworks, it's recommended to use the regular Play dependency mechanism - it keeps things tidier and cuts down on duplication. However, you could also copy the module into wherever you keep your local modules and add an entry for each framework ID.
+
+
+h2. Stability and testing
+
+At the moment, Modulate has only been tested with a few existing modules - deadbolt and tabula-rasa from the public repository, and several internal modules (which caused the requirement for this module in the first place!).  So far, everything seems to be working correctly but if you do use a module that causes problems when used with Modulate, please let me know.
+
+
+h2. Sample application
+
+The application found in samples-and-tests/testapp is hooked to Modulate for 4 framework IDs, each with a different set of modules.  To try it out, use one of the following:
+* play run --%production
+* play run --%development
+* play run --%whatever
+* play test (the framework ID of "test" is implicit here)

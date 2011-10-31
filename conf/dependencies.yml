@@ -1,0 +1,4 @@
+self: play -> modulate 0.1
+
+require:
+    - play

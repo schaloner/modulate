@@ -1,0 +1,18 @@
+production:
+  - local-modules/module1
+  - local-modules/module2
+  - local-modules/module3
+  - local-modules/module4
+
+development:
+  - local-modules/module2
+  - local-modules/module4
+
+whatever:
+  - local-modules/module3
+  - local-modules/module4
+
+test:
+  - local-modules/module1
+  - local-modules/module2
+  - local-modules/module4

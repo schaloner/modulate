@@ -1,0 +1,4 @@
+self: play -> module4 0.1
+
+require:
+    - play
