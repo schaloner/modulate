@@ -1,4 +1,4 @@
-self: play -> modulate 0.1
+self: play -> modulate 1.0
 
 require:
     - play
